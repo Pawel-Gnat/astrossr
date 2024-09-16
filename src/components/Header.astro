@@ -1,0 +1,62 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath, getRouteFromUrl } from '../i18n/utils';
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const route = getRouteFromUrl(Astro.url);
+---
+
+<header>
+	<nav>
+		<h2><a href={translatePath('/')}>{SITE_TITLE}</a></h2>
+		<div class="internal-links">
+			<HeaderLink href={translatePath('/')}>{t('nav.home')}</HeaderLink>
+			<HeaderLink href={translatePath('/blog/')}>{t('nav.blog')}</HeaderLink>
+			<HeaderLink href={translatePath(`/${route ? route : 'omnie'}`, lang)}>{t('nav.about')}</HeaderLink>
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+	}
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	.social-links,
+	.social-links a {
+		display: flex;
+	}
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+	}
+</style>
