@@ -8,5 +8,7 @@ import node from '@astrojs/node'
 export default defineConfig({
 	integrations: [mdx(), sitemap()],
 	output: 'server',
-	adapter: netlify(),
+	adapter: netlify({
+		edgeMiddleware: true,
+	}),
 })
